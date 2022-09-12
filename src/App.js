@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import BoxTypeResults from './components/BoxTypeResults/BoxTypeResults';
+import MaterialList from './components/MaterialList/MaterialList';
 import ProductDescriptionForm from './components/ProductDescriptionForm/ProductDescriptionForm';
 // import { tTypeSlipcase } from './middleware/t_type_slipcase';
 // import { hTypeSlipcase } from './middleware/h_type_slipcase';
@@ -38,9 +39,13 @@ function App() {
   };
 
   return (
-    <div className="max-w-max">
-      <ProductDescriptionForm onSubmit={handleFormSubmit} />
-      <BoxTypeResults boxData={boxData} />
+    <div className="flex">
+      <div className="max-w-max">
+        <ProductDescriptionForm onSubmit={handleFormSubmit} />
+        <BoxTypeResults boxData={boxData} />
+      </div>
+      <MaterialList title="Board materials" />
+      <MaterialList title="Cover materials" />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from './cart-slice';
+import coverMaterialSlice from './cover-materials-slice';
+import boardMaterialSlice from './board-materials-slice';
 
 const store = configureStore({
-  reducer: { cart: cartReducer },
+  reducer: { coverMaterials: coverMaterialSlice, boardMaterials: boardMaterialSlice },
 });
 
 export default store;
