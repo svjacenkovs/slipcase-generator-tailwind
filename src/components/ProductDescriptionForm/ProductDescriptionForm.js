@@ -9,7 +9,7 @@ export default function ProductDescriptionForm(props) {
   };
   return (
     <section>
-      <Card className="">
+      <Card className="bg-yellow">
         <h1 className="text-xl text-yellow text-center font-medium bg-navy drop-shadow-lg">
           Product description
         </h1>

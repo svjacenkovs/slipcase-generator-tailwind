@@ -39,13 +39,13 @@ function App() {
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-screen p-2">
       <div className="max-w-max">
         <ProductDescriptionForm onSubmit={handleFormSubmit} />
         <BoxTypeResults boxData={boxData} />
       </div>
       <MaterialList title="Board materials" />
-      <MaterialList title="Cover materials" />
+      <MaterialList title="Board materials" />
     </div>
   );
 }

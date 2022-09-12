@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  padding: 10px;
-}
-
 html {
   font-family: 'Space Grotesk', sans-serif;
 }
