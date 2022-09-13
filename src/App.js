@@ -44,8 +44,8 @@ function App() {
         <ProductDescriptionForm onSubmit={handleFormSubmit} />
         <BoxTypeResults boxData={boxData} />
       </div>
-      <MaterialList title="Board materials" />
-      <MaterialList title="Board materials" />
+      <MaterialList listFor="boardMaterials" title="Boards" />
+      <MaterialList listFor="caseMaterials" title="Case materials" />
     </div>
   );
 }

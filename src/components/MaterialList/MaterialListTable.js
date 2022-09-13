@@ -1,7 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import MaterialListItem from './MaterialListItem';
 
-export default function MaterialListTable() {
+export default function MaterialListTable(props) {
+  const { tableFor } = props;
+
+  const materialListArray = useSelector((state) => state.boardMaterials.items);
+
+  const items = materialListArray.map((item, index) => {
+    return <MaterialListItem key={index} data={item} />;
+  });
   return (
     <table className="w-full text-center table-auto border-separate border-spacing-y-3">
       <thead className="bg-navy text-yellow h-12">
@@ -13,11 +21,7 @@ export default function MaterialListTable() {
           <th>Amount</th>
         </tr>
       </thead>
-      <tbody className="">
-        <MaterialListItem />
-        <MaterialListItem />
-        <MaterialListItem />
-      </tbody>
+      <tbody>{items}</tbody>
     </table>
   );
 }
