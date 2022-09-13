@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import BoxTypeResults from './components/BoxTypeResults/BoxTypeResults';
 import MaterialList from './components/MaterialList/MaterialList';
 import ProductDescriptionForm from './components/ProductDescriptionForm/ProductDescriptionForm';
-// import { tTypeSlipcase } from './middleware/t_type_slipcase';
-// import { hTypeSlipcase } from './middleware/h_type_slipcase';
 
 function App() {
   const [boxData, setBoxData] = useState([]);
@@ -45,7 +43,7 @@ function App() {
         <BoxTypeResults boxData={boxData} />
       </div>
       <MaterialList listFor="boardMaterials" title="Boards" />
-      <MaterialList listFor="caseMaterials" title="Case materials" />
+      <MaterialList listFor="coverMaterials" title="Case materials" />
     </div>
   );
 }

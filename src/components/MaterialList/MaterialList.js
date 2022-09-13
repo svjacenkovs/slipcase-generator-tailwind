@@ -9,14 +9,14 @@ export default function MaterialList(props) {
   const { title, listFor: materialType } = props;
   return (
     <section>
-      <Card className="ml-5 h-full flex flex-col justify-between bg-yellow">
-        <div>
-          <h1 className="text-xl text-yellow text-center font-medium bg-gradient-to-r bg-navy drop-shadow-lg">{title}</h1>
-          <div className="m-3">
-            <MaterialListTable tableFor={materialType} />
-          </div>
+      <Card className="ml-5 h-full w-max-min flex flex-col justify-between bg-red">
+        <h1 className="sticky-top-0 text-xl  text-yellow text-center font-medium bg-gradient-to-r bg-navy drop-shadow-lg">
+          {title}
+        </h1>
+        <div className="m-3 p-3 grow  overflow-auto">
+          <MaterialListTable tableFor={materialType} />
         </div>
-        <MaterialListActions />
+        <MaterialListActions tableFor={materialType} />
       </Card>
     </section>
   );

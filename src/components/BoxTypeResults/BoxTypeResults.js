@@ -29,7 +29,7 @@ export default function BoxTypeResults(props) {
 
   return (
     <section>
-      <Card className="mt-5 bg-yellow">
+      <Card className="mt-5 bg-red">
         <h1 className="text-xl text-yellow text-center font-medium bg-gradient-to-r bg-navy drop-shadow-lg">
           Calculation results
         </h1>

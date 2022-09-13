@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { boardMaterialActions } from '../../store/board-materials-slice';
+import { coverMaterialActions } from '../../store/cover-materials-slice';
 import Button from '../UI/Button';
 
 export default function MaterialListActions(props) {
   const dispatch = useDispatch();
-  const [materialData, setMaterialData] = useState({ width: 0, height: 0, grain: '' });
+  const [materialData, setMaterialData] = useState({
+    width: 0,
+    height: 0,
+    grain: '',
+  });
 
   const handleChange = (event) => {
     setMaterialData((prevMaterialData) => {
@@ -13,26 +18,46 @@ export default function MaterialListActions(props) {
         ...prevMaterialData,
         [event.target.name]: event.target.valueAsNumber,
       };
-      newMaterialData.grain = newMaterialData.width < newMaterialData.height ? 'long' : 'short';
+      newMaterialData.grain =
+        newMaterialData.width < newMaterialData.height ? 'long' : 'short';
       return { ...newMaterialData };
     });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(boardMaterialActions.addItem(materialData));
+
+    dispatch(
+      props.tableFor === 'boardMaterials'
+        ? boardMaterialActions.addItem(materialData)
+        : coverMaterialActions.addItem(materialData)
+    );
   };
 
   return (
-    <form className="flex bg-navy p-3 justify-between" onSubmit={handleSubmit}>
-      <div className="w-2/6">
+    <form className="flex bg-navy p-3 max-w-fit" onSubmit={handleSubmit}>
+      <div>
         <label className="text-yellow">Width:</label>
-        <input className="pl-2 mt-1 border focus:outline-orange-300 w-full" type="number" placeholder="mm" name="width" onChange={handleChange} />
+        <input
+          className="pl-2 mt-1 border focus:outline-red w-full"
+          type="number"
+          placeholder="mm"
+          name="width"
+          onChange={handleChange}
+        />
       </div>
-      <div className="w-2/6 ml-1">
+      <div className="ml-1">
         <label className="text-yellow">Height:</label>
-        <input className="pl-2 mt-1 border focus:outline-orange-300 w-full" type="number" placeholder="mm" name="height" onChange={handleChange} />
+        <input
+          className="pl-2 mt-1 border focus:outline-red w-full"
+          type="number"
+          placeholder="mm"
+          name="height"
+          onChange={handleChange}
+        />
       </div>
-      <Button className="self-end w-full bg-white text-navy font-medium">Add material</Button>
+      <Button className="self-end bg-white text-navy font-medium ml-1 whitespace-nowrap overflow-visible">
+        Add Material
+      </Button>
     </form>
   );
 }

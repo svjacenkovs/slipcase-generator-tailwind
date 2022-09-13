@@ -4,7 +4,7 @@ import Card from '../UI/Card';
 export default function ResultsItem(props) {
   const { boxType, boardStamp, coverStamp } = props;
   return (
-    <Card className="flex m-2 border rounded-none">
+    <Card className="flex m-2 border rounded-none bg-white">
       <div className="text-center border-r-2">
         <p className="w-max px-2 border-b-2 bg-gradient-to-r bg-navy text-yellow">
           Box type
