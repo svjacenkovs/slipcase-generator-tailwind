@@ -1,6 +1,4 @@
 import React from 'react';
-
-// import { coverMaterialActions } from '../../store/cover-materials-slice';
 import Card from '../UI/Card';
 import MaterialListTable from './MaterialListTable';
 import MaterialListActions from './MaterialListActions';

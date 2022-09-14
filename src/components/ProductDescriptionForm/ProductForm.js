@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button';
+import { useDispatch } from 'react-redux';
+import { upsCalculationActions } from '../../store/ups-calculation-slice';
 
-export default function ProductForm(props) {
+export default function ProductForm() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     width: '',
     height: '',
@@ -18,7 +21,13 @@ export default function ProductForm(props) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onSubmit(formData);
+    dispatch(upsCalculationActions.calculateStampSizes(formData));
+    setFormData({
+      width: '',
+      height: '',
+      spine: '',
+      boardThickness: '',
+    });
   };
 
   return (

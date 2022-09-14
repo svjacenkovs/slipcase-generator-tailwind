@@ -1,9 +1,12 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Card from '../UI/Card';
 import ResultsItem from './ResultsItem.js';
 
-export default function BoxTypeResults(props) {
-  const boxData = props.boxData;
+export default function BoxTypeResults() {
+  const boxData = useSelector(
+    (state) => state.upsCalculations.submittedBoxSizes
+  );
   let results;
   if (boxData.length === 0) {
     results = (
@@ -18,8 +21,8 @@ export default function BoxTypeResults(props) {
     results = boxData.map((box) => {
       return (
         <ResultsItem
-          key={box.boxType}
-          boxType={box.boxType}
+          key={box.type}
+          boxType={box.type}
           boardStamp={box.boardStamp}
           coverStamp={box.coverStamp}
         />

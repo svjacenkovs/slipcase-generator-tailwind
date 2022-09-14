@@ -10,8 +10,11 @@ export default function MaterialListTable(props) {
     (state) => state[`${tableFor}`]?.items || [] // ar state[] dinamiski piekļūtstam steitam! state.coverMaterials vai state.caseMaterials. galā ar ?. optional chaning izveidojam default lielumus, ja nav tādas .items vērtības
   );
 
+  const hasStampSize =
+    useSelector((state) => state.upsCalculations.submittedBoxSizes).length > 0;
+
   const items = materialListArray.map((item, index) => {
-    return <MaterialListItem key={index} data={item} />;
+    return <MaterialListItem key={index} data={{ ...item, hasStampSize }} />;
   });
   return (
     <table className="w-full text-center table-auto border-separate border-spacing-y-3">
@@ -21,7 +24,7 @@ export default function MaterialListTable(props) {
           <th>x</th>
           <th>Height</th>
           <th>Grain</th>
-          <th>Amount</th>
+          {hasStampSize && <th>Amount</th>}
         </tr>
       </thead>
       <tbody>{items}</tbody>

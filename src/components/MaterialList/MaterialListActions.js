@@ -7,8 +7,8 @@ import Button from '../UI/Button';
 export default function MaterialListActions(props) {
   const dispatch = useDispatch();
   const [materialData, setMaterialData] = useState({
-    width: 0,
-    height: 0,
+    width: '',
+    height: '',
     grain: '',
   });
 
@@ -25,12 +25,16 @@ export default function MaterialListActions(props) {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-
     dispatch(
       props.tableFor === 'boardMaterials'
         ? boardMaterialActions.addItem(materialData)
         : coverMaterialActions.addItem(materialData)
     );
+    setMaterialData({
+      width: '',
+      height: '',
+      grain: '',
+    });
   };
 
   return (
@@ -43,6 +47,7 @@ export default function MaterialListActions(props) {
           placeholder="mm"
           name="width"
           onChange={handleChange}
+          value={materialData.width}
         />
       </div>
       <div className="ml-1">
@@ -53,6 +58,7 @@ export default function MaterialListActions(props) {
           placeholder="mm"
           name="height"
           onChange={handleChange}
+          value={materialData.height}
         />
       </div>
       <Button className="self-end bg-white text-navy font-medium ml-1 whitespace-nowrap overflow-visible">
