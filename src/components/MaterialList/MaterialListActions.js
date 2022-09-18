@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { boardMaterialActions } from '../../store/board-materials-slice';
 import { coverMaterialActions } from '../../store/cover-materials-slice';
 import Button from '../UI/Button';
 
 export default function MaterialListActions(props) {
+  const boxData = useSelector(
+    (state) => state.upsCalculations.submittedBoxSizes
+  );
   const dispatch = useDispatch();
   const [materialData, setMaterialData] = useState({
     width: '',
@@ -30,6 +33,13 @@ export default function MaterialListActions(props) {
         ? boardMaterialActions.addItem(materialData)
         : coverMaterialActions.addItem(materialData)
     );
+    if (boxData.length > 0) {
+      dispatch(
+        props.tableFor === 'boardMaterials'
+          ? boardMaterialActions.calculateUps(boxData)
+          : coverMaterialActions.calculateUps(boxData)
+      );
+    }
     setMaterialData({
       width: '',
       height: '',
@@ -38,11 +48,11 @@ export default function MaterialListActions(props) {
   };
 
   return (
-    <form className="flex bg-navy p-3 max-w-fit" onSubmit={handleSubmit}>
-      <div>
+    <form className="flex bg-navy p-3 min-w-min" onSubmit={handleSubmit}>
+      <div className="flex flex-col">
         <label className="text-yellow">Width:</label>
         <input
-          className="pl-2 mt-1 border focus:outline-red w-full"
+          className="pl-2 mt-1 border focus:outline-red w-10"
           type="number"
           placeholder="mm"
           name="width"
@@ -50,10 +60,10 @@ export default function MaterialListActions(props) {
           value={materialData.width}
         />
       </div>
-      <div className="ml-1">
+      <div className="flex flex-col">
         <label className="text-yellow">Height:</label>
         <input
-          className="pl-2 mt-1 border focus:outline-red w-full"
+          className="pl-2 mt-1 border focus:outline-red w-10"
           type="number"
           placeholder="mm"
           name="height"

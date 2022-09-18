@@ -31,9 +31,9 @@ export default function ResultsItem(props) {
       {/* Stamp generator action Buttons */}
       <div className="flex flex-col gap-1 m-auto">
         <p className="text-gray-600/50">Generate stamp</p>
-        <Button className="w-32 text-sm ">board</Button>
-        <Button className="w-32 text-sm ">cover</Button>
-        <Button className="w-32 text-sm ">both</Button>
+        <Button className="text-sm ">board</Button>
+        <Button className="text-sm ">cover</Button>
+        <Button className="text-sm ">both</Button>
       </div>
     </Card>
   );

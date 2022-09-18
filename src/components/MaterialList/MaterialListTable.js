@@ -17,7 +17,7 @@ export default function MaterialListTable(props) {
     return <MaterialListItem key={index} data={{ ...item, hasStampSize }} />;
   });
   return (
-    <table className="w-full text-center table-auto border-separate border-spacing-y-3">
+    <table className="text-center table-auto border-separate border-spacing-y-3 min-w-full">
       <thead className="bg-navy text-yellow h-12">
         <tr className="outline outline-navy outline-offset-0 outline-2">
           <th>Width</th>

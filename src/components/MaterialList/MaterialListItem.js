@@ -3,6 +3,15 @@ import Card from '../UI/Card';
 
 export default function MaterialListItem(props) {
   const { data } = props;
+
+  const typeHByWidth = Math.floor(data.upsOnSheet.typeH.byWidth);
+  const typeHByHeight = Math.floor(data.upsOnSheet.typeH.byHeight);
+  const typeHTotal = typeHByWidth * typeHByHeight;
+
+  const typeTByWidth = Math.floor(data.upsOnSheet.typeT.byWidth);
+  const typeTByHeight = Math.floor(data.upsOnSheet.typeT.byHeight);
+  const typeTTotal = typeTByWidth * typeTByHeight;
+
   return (
     <tr className="outline outline-navy outline-offset-0 outline-2 bg-white">
       <td>{data.width}</td>
@@ -20,8 +29,8 @@ export default function MaterialListItem(props) {
                 H
               </h2>
               <div className="border-l w-full">
-                <p className="text-navy font-bold text-center">4</p>
-                <p className="text-xs text-gray-600/50">2x3</p>
+                <p className="text-navy font-bold text-center">{typeHTotal}</p>
+                <p className="text-xs text-gray-600/50">{`${typeHByWidth}x${typeHByHeight}`}</p>
               </div>
             </div>
           </Card>
@@ -34,8 +43,8 @@ export default function MaterialListItem(props) {
                 T
               </h2>
               <div className="border-l w-full">
-                <p className="text-navy font-bold text-center">4</p>
-                <p className="text-xs text-gray-600/50">2x3</p>
+                <p className="text-navy font-bold text-center">{typeTTotal}</p>
+                <p className="text-xs text-gray-600/50">{`${typeTByWidth}x${typeTByHeight}`}</p>
               </div>
             </div>
           </Card>

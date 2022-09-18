@@ -1,9 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from '../UI/Card';
 import ResultsItem from './ResultsItem.js';
+import { boardMaterialActions } from '../../store/board-materials-slice';
+import { coverMaterialActions } from '../../store/cover-materials-slice';
 
 export default function BoxTypeResults() {
+  const dispatch = useDispatch();
   const boxData = useSelector(
     (state) => state.upsCalculations.submittedBoxSizes
   );
@@ -29,6 +32,13 @@ export default function BoxTypeResults() {
       );
     });
   }
+
+  useEffect(() => {
+    if (boxData.length > 0) {
+      dispatch(boardMaterialActions.calculateUps(boxData));
+      dispatch(coverMaterialActions.calculateUps(boxData));
+    }
+  }, [boxData, dispatch]);
 
   return (
     <section>
