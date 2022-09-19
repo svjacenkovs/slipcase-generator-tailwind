@@ -72,21 +72,31 @@ const coverMaterialSlice = createSlice({
         switch (material.grain) {
           case 'long':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
-            material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
+            material.upsOnSheet.typeH.byWidth =
+              material.width / typeHSizes.coverStamp.width;
+            material.upsOnSheet.typeH.byHeight =
+              material.height / typeHSizes.coverStamp.height;
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
-            material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
+            material.upsOnSheet.typeT.byWidth =
+              material.width / typeTSizes.coverStamp.width;
+            material.upsOnSheet.typeT.byHeight =
+              material.height / typeTSizes.coverStamp.height;
             break;
           case 'short':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
-            material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
+            material.upsOnSheet.typeH.byHeight =
+              material.height / typeHSizes.coverStamp.height;
+            material.upsOnSheet.typeH.byWidth =
+              material.width / typeHSizes.coverStamp.width;
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
-            material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
+            material.upsOnSheet.typeT.byHeight =
+              material.height / typeTSizes.coverStamp.height;
+            material.upsOnSheet.typeT.byWidth =
+              material.width / typeTSizes.coverStamp.width;
+            break;
+          default:
             break;
         }
 

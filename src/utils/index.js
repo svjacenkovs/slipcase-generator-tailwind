@@ -107,6 +107,7 @@ async function pape() {
   // Trigger the browser to download the PDF document
   download(pdfBytes, `${fileName}_pape.pdf`, 'application/pdf');
 }
+
 async function parvalks() {
   //PĀRVALKA dokumenta izmērs
   let documentWidth =
