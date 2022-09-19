@@ -7,8 +7,8 @@ const initialState = {
       height: 640,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0 },
-        typeT: { byWidth: 0, byHeight: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
       },
     },
     {
@@ -16,8 +16,8 @@ const initialState = {
       height: 900,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0 },
-        typeT: { byWidth: 0, byHeight: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
       },
     },
     {
@@ -25,8 +25,8 @@ const initialState = {
       height: 640,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0 },
-        typeT: { byWidth: 0, byHeight: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
       },
     },
     {
@@ -34,8 +34,8 @@ const initialState = {
       height: 1020,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0 },
-        typeT: { byWidth: 0, byHeight: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
       },
     },
     {
@@ -43,8 +43,8 @@ const initialState = {
       height: 720,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0 },
-        typeT: { byWidth: 0, byHeight: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
       },
     },
   ],
@@ -60,26 +60,43 @@ const coverMaterialSlice = createSlice({
         height,
         grain,
         upsOnSheet: {
-          typeH: { byWidth: 0, byHeight: 0 },
-          typeT: { byWidth: 0, byHeight: 0 },
+          typeH: { byWidth: 0, byHeight: 0, total: 0 },
+          typeT: { byWidth: 0, byHeight: 0, total: 0 },
         },
       });
     },
     calculateUps(state, action) {
       const typeHSizes = action.payload.find((box) => box.type === 'H');
       const typeTSizes = action.payload.find((box) => box.type === 'T');
-      state.items.forEach((item) => {
-        // Type H boxes cover stamps
-        item.upsOnSheet.typeH.byWidth =
-          item.width / typeHSizes.coverStamp.width;
-        item.upsOnSheet.typeH.byHeight =
-          item.height / typeHSizes.coverStamp.height;
+      state.items.forEach((material) => {
+        switch (material.grain) {
+          case 'long':
+            // Type H boxes cover stamps
+            material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
+            material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
 
-        // Type T boxes cover stamps
-        item.upsOnSheet.typeT.byWidth =
-          item.width / typeTSizes.coverStamp.width;
-        item.upsOnSheet.typeT.byHeight =
-          item.height / typeTSizes.coverStamp.height;
+            // Type T boxes cover stamps
+            material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
+            material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
+            break;
+          case 'short':
+            // Type H boxes cover stamps
+            material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
+            material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
+
+            // Type T boxes cover stamps
+            material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
+            material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
+            break;
+        }
+
+        // // Type H boxes cover stamps
+        // material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
+        // material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
+
+        // // Type T boxes cover stamps
+        // material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
+        // material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
       });
     },
   },

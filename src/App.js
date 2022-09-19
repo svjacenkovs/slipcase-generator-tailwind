@@ -11,7 +11,7 @@ function App() {
         <BoxTypeResults />
       </div>
       <MaterialList listFor="boardMaterials" title="Boards" />
-      <MaterialList listFor="coverMaterials" title="Case materials" />
+      <MaterialList listFor="coverMaterials" title="Cover materials" />
     </div>
   );
 }
