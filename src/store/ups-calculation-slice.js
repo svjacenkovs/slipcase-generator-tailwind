@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { submittedBoxSizes: [] };
+const initialState = {
+  submittedBoxSizes: [],
+  sizeInputs: { width: 0, height: 0, spine: 0, materialThickness: 0 },
+};
 const upsCalculationSlice = createSlice({
   name: 'boardMaterials',
   initialState: initialState,
@@ -10,6 +13,7 @@ const upsCalculationSlice = createSlice({
       state.submittedBoxSizes = [];
       const typeHbox = {
         type: 'H',
+        providedSizes: { spine, width, height, boardThickness },
         boardStamp: {
           width: 2 * width + spine,
           height: 2 * (spine + boardThickness) + height + 2 * boardThickness,
@@ -21,6 +25,7 @@ const upsCalculationSlice = createSlice({
       };
       const typeTbox = {
         type: 'T',
+        providedSizes: { spine, width, height, boardThickness },
         boardStamp: {
           width: 2 * width + spine,
           height: 2 * (spine + boardThickness) + height,
@@ -31,6 +36,7 @@ const upsCalculationSlice = createSlice({
         },
       };
       state.submittedBoxSizes.push(typeHbox, typeTbox);
+      state.sizeInputs = { width, height, spine, boardThickness };
     },
   },
 });
