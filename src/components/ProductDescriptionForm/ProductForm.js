@@ -15,13 +15,20 @@ export default function ProductForm() {
     setFormData((prevFormData) => {
       return {
         ...prevFormData,
-        [event.target.name]: event.target.valueAsNumber, // ES6 computed properties
+        [event.target.name]: event.target.value, // ES6 computed properties
       };
     });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(upsCalculationActions.calculateStampSizes(formData));
+
+    //Convert string data Number value
+    let data = {};
+    for (const [key, value] of Object.entries(formData)) {
+      // console.log(`${key}: ${value}`);
+      data[key] = Number(value);
+    }
+    dispatch(upsCalculationActions.calculateStampSizes(data));
   };
 
   return (
@@ -73,6 +80,7 @@ export default function ProductForm() {
           </label>
           <input
             type="number"
+            step="0.1"
             id="boardThickness"
             name="boardThickness"
             placeholder="mm"
