@@ -17,15 +17,24 @@ export default function MaterialListActions(props) {
     setMaterialData((prevMaterialData) => {
       const newMaterialData = {
         ...prevMaterialData,
-        [event.target.name]: event.target.valueAsNumber,
+        [event.target.name]: event.target.value,
       };
       newMaterialData.grain = newMaterialData.width < newMaterialData.height ? 'long' : 'short';
       return { ...newMaterialData };
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(props.tableFor === 'boardMaterials' ? boardMaterialActions.addItem(materialData) : coverMaterialActions.addItem(materialData));
+
+    //Convert string data to Number value
+    let data = {};
+    for (const [key, value] of Object.entries(materialData)) {
+      // console.log(`${key}: ${value}`);
+      key === 'grain' ? (data[key] = value) : (data[key] = Number(value));
+    }
+
+    dispatch(props.tableFor === 'boardMaterials' ? boardMaterialActions.addItem(data) : coverMaterialActions.addItem(data));
     if (boxData.length > 0) {
       dispatch(props.tableFor === 'boardMaterials' ? boardMaterialActions.calculateUps(boxData) : coverMaterialActions.calculateUps(boxData));
     }

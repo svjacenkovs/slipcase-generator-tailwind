@@ -22,7 +22,7 @@ export default function ProductForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //Convert string data Number value
+    //Convert string data to Number value
     let data = {};
     for (const [key, value] of Object.entries(formData)) {
       // console.log(`${key}: ${value}`);
@@ -36,43 +36,19 @@ export default function ProductForm() {
       <div>
         <div className="flex flex-col">
           <label htmlFor="width">Width:</label>
-          <input
-            type="number"
-            id="width"
-            name="width"
-            placeholder="mm"
-            value={formData.width}
-            onChange={handleChange}
-            className="pl-2 mt-1 border focus:outline-red"
-          ></input>
+          <input type="number" id="width" name="width" placeholder="mm" value={formData.width} onChange={handleChange} className="pl-2 mt-1 border focus:outline-red"></input>
         </div>
         <div className="flex flex-col">
           <label className="mt-2" htmlFor="height">
             Height:
           </label>
-          <input
-            type="number"
-            id="height"
-            name="height"
-            placeholder="mm"
-            value={formData.height}
-            onChange={handleChange}
-            className="pl-2 mt-1 border focus:outline-red"
-          ></input>
+          <input type="number" id="height" name="height" placeholder="mm" value={formData.height} onChange={handleChange} className="pl-2 mt-1 border focus:outline-red"></input>
         </div>
         <div className="flex flex-col">
           <label className="mt-2" htmlFor="spine">
             Spine:
           </label>
-          <input
-            type="number"
-            id="spine"
-            name="spine"
-            placeholder="mm"
-            value={formData.spine}
-            onChange={handleChange}
-            className="pl-2 mt-1 border focus:outline-red"
-          ></input>
+          <input type="number" id="spine" name="spine" placeholder="mm" value={formData.spine} onChange={handleChange} className="pl-2 mt-1 border focus:outline-red"></input>
         </div>
         <div className="flex flex-col">
           <label className="mt-2" htmlFor="spine">

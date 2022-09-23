@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const combinedTboardHeightAmount = (
-  materialLength,
-  totalBoxHeight,
-  spineWidth,
-  boxBleed
-) => {
+const combinedTboardHeightAmount = (materialLength, totalBoxHeight, spineWidth, boxBleed) => {
   if (materialLength < totalBoxHeight + 2 * boxBleed) {
     return 0;
   }
@@ -15,34 +10,31 @@ const combinedTboardHeightAmount = (
 
   while (materialLength > currentCombinationHeight) {
     ups += 1;
-    currentCombinationHeight +=
-      ups * totalBoxHeight -
-      ((ups - 1) * (spineWidth + 2 * boxBleed)) / 2 +
-      2 * boxBleed;
+    currentCombinationHeight += ups * totalBoxHeight - ((ups - 1) * (spineWidth + 2 * boxBleed)) / 2 + 2 * boxBleed;
   }
   return ups;
 };
 
 const initialState = {
   items: [
-    {
-      width: 700,
-      height: 1000,
-      grain: 'long',
-      upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
-      },
-    },
-    {
-      width: 800,
-      height: 1000,
-      grain: 'long',
-      upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
-      },
-    },
+    // {
+    //   width: 700,
+    //   height: 1000,
+    //   grain: 'long',
+    //   upsOnSheet: {
+    //     typeH: { byWidth: 0, byHeight: 0, total: 0 },
+    //     typeT: { byWidth: 0, byHeight: 0, total: 0 },
+    //   },
+    // },
+    // {
+    //   width: 800,
+    //   height: 1000,
+    //   grain: 'long',
+    //   upsOnSheet: {
+    //     typeH: { byWidth: 0, byHeight: 0, total: 0 },
+    //     typeT: { byWidth: 0, byHeight: 0, total: 0 },
+    //   },
+    // },
     {
       width: 640,
       height: 900,
@@ -81,21 +73,13 @@ const boardMaterialSlice = createSlice({
       state.items.forEach((material) => {
         //Type H boxes:
         // Sideways box orientation
-        const WidthSidewaysH = Math.floor(
-          material.width / (typeHSizes.boardStamp.width + 2 * boxBleed)
-        );
-        const HeightSidewaysH = Math.floor(
-          material.height / (typeHSizes.boardStamp.height + 2 * boxBleed)
-        );
+        const WidthSidewaysH = Math.floor(material.width / (typeHSizes.boardStamp.width + 2 * boxBleed));
+        const HeightSidewaysH = Math.floor(material.height / (typeHSizes.boardStamp.height + 2 * boxBleed));
         const totalSidewaysTypeH = WidthSidewaysH * HeightSidewaysH;
 
         // Vertical box orientation
-        const WidthVerticalH = Math.floor(
-          material.height / (typeHSizes.boardStamp.width + 2 * boxBleed)
-        );
-        const HeightVerticalH = Math.floor(
-          material.width / (typeHSizes.boardStamp.height + 2 * boxBleed)
-        );
+        const WidthVerticalH = Math.floor(material.height / (typeHSizes.boardStamp.width + 2 * boxBleed));
+        const HeightVerticalH = Math.floor(material.width / (typeHSizes.boardStamp.height + 2 * boxBleed));
         const totalVerticalTypeH = WidthVerticalH * HeightVerticalH;
 
         // Choose the most on sheet for type "H" box
@@ -111,33 +95,21 @@ const boardMaterialSlice = createSlice({
 
         //Type T boxes
         // Sideways box orientation
-        const WidthSidewaysT = Math.floor(
-          material.width / (typeTSizes.boardStamp.width + 2 * boxBleed)
-        );
+        const WidthSidewaysT = Math.floor(material.width / (typeTSizes.boardStamp.width + 2 * boxBleed));
         const HeightSidewaysT = Math.floor(
           // material.height / typeTSizes.boardStamp.height
-          combinedTboardHeightAmount(
-            material.height,
-            typeTSizes.boardStamp.height,
-            providedInputSizes.spine,
-            boxBleed
-          )
+          combinedTboardHeightAmount(material.height, typeTSizes.boardStamp.height, providedInputSizes.spine, boxBleed)
         );
         const totalSidewaysTypeT = WidthSidewaysT * HeightSidewaysT;
 
         // Vertical box orientation
-        const WidthVerticalT = Math.floor(
-          material.height / (typeTSizes.boardStamp.width + 2 * boxBleed)
-        );
+        const WidthVerticalT = Math.floor(material.height / (typeTSizes.boardStamp.width + 2 * boxBleed));
         const HeightVerticalT = Math.floor(
           //material.width / typeTSizes.boardStamp.height
-          combinedTboardHeightAmount(
-            material.width,
-            typeTSizes.boardStamp.height,
-            providedInputSizes.spine,
-            boxBleed
-          )
+          combinedTboardHeightAmount(material.width, typeTSizes.boardStamp.height, providedInputSizes.spine, boxBleed)
         );
+        console.log('width:', material.width, 'boarStampHeight:', typeTSizes.boardStamp.height, 'spine:', providedInputSizes.spine, 'boxBleed:', boxBleed);
+
         const totalVerticalTypeT = WidthVerticalT * HeightVerticalT;
         // Choose the most on sheet for type "T" box
         if (totalSidewaysTypeT >= totalVerticalTypeT) {
