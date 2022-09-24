@@ -1,18 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const combinedTboardHeightAmount = (materialLength, totalBoxHeight, spineWidth, boxBleed) => {
-  if (materialLength < totalBoxHeight + 2 * boxBleed) {
+  let ups = 1;
+  let currentCombinationHeight = ups * totalBoxHeight - (ups - 1) * spineWidth + (ups + 1) * boxBleed;
+  // Ja materiāls ir mazāks par vienu kastes augstumu, atgriežam 0
+  if (materialLength < currentCombinationHeight) {
     return 0;
   }
-
-  let currentCombinationHeight = 0;
-  let ups = 0;
-
-  while (materialLength > currentCombinationHeight) {
-    ups += 1;
-    currentCombinationHeight += ups * totalBoxHeight - ((ups - 1) * (spineWidth + 2 * boxBleed)) / 2 + 2 * boxBleed;
+  while (materialLength >= currentCombinationHeight) {
+    ups++;
+    currentCombinationHeight = ups * totalBoxHeight - (ups - 1) * spineWidth + (ups + 1) * boxBleed;
   }
-  return ups;
+  return ups - 1;
 };
 
 const initialState = {
@@ -108,9 +107,8 @@ const boardMaterialSlice = createSlice({
           //material.width / typeTSizes.boardStamp.height
           combinedTboardHeightAmount(material.width, typeTSizes.boardStamp.height, providedInputSizes.spine, boxBleed)
         );
-        console.log('width:', material.width, 'boarStampHeight:', typeTSizes.boardStamp.height, 'spine:', providedInputSizes.spine, 'boxBleed:', boxBleed);
-
         const totalVerticalTypeT = WidthVerticalT * HeightVerticalT;
+
         // Choose the most on sheet for type "T" box
         if (totalSidewaysTypeT >= totalVerticalTypeT) {
           material.upsOnSheet.typeT.byWidth = WidthSidewaysT;
