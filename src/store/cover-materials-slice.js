@@ -68,7 +68,7 @@ const coverMaterialSlice = createSlice({
     calculateUps(state, action) {
       const typeHSizes = action.payload.find((box) => box.type === 'H');
       const typeTSizes = action.payload.find((box) => box.type === 'T');
-      const boxBleed = 2.5; // 2.5mm !!!!
+      const boxBleed = 10; // 2.5mm !!!!
       state.items.forEach((material) => {
         switch (material.grain) {
           case 'long':
