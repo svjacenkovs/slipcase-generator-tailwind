@@ -13,6 +13,33 @@ const initialState = {
     },
     {
       width: 640,
+      height: 460,
+      grain: 'short',
+      upsOnSheet: {
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+      },
+    },
+    {
+      width: 520,
+      height: 720,
+      grain: 'long',
+      upsOnSheet: {
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+      },
+    },
+    {
+      width: 720,
+      height: 520,
+      grain: 'short',
+      upsOnSheet: {
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+      },
+    },
+    {
+      width: 640,
       height: 900,
       grain: 'long',
       upsOnSheet: {
