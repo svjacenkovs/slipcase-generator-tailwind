@@ -325,7 +325,7 @@ export let tTypeSlipcase = {
     ];
     return lines;
   },
-  calculateCasing: function (width, height, depth, materialThickness) {
+  calculateCasingLines: function (width, height, depth, materialThickness) {
     let lines = [
       {
         lineNumber: 1,

@@ -68,45 +68,30 @@ const coverMaterialSlice = createSlice({
     calculateUps(state, action) {
       const typeHSizes = action.payload.find((box) => box.type === 'H');
       const typeTSizes = action.payload.find((box) => box.type === 'T');
+      const boxBleed = 2.5; // 2.5mm !!!!
       state.items.forEach((material) => {
         switch (material.grain) {
           case 'long':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byWidth =
-              material.width / typeHSizes.coverStamp.width;
-            material.upsOnSheet.typeH.byHeight =
-              material.height / typeHSizes.coverStamp.height;
+            material.upsOnSheet.typeH.byWidth = material.width / (typeHSizes.coverStamp.width + 2 * boxBleed);
+            material.upsOnSheet.typeH.byHeight = material.height / (typeHSizes.coverStamp.height + 2 * boxBleed);
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byWidth =
-              material.width / typeTSizes.coverStamp.width;
-            material.upsOnSheet.typeT.byHeight =
-              material.height / typeTSizes.coverStamp.height;
+            material.upsOnSheet.typeT.byWidth = material.width / (typeTSizes.coverStamp.width + 2 * boxBleed);
+            material.upsOnSheet.typeT.byHeight = material.height / (typeTSizes.coverStamp.height + 2 * boxBleed);
             break;
           case 'short':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byHeight =
-              material.height / typeHSizes.coverStamp.height;
-            material.upsOnSheet.typeH.byWidth =
-              material.width / typeHSizes.coverStamp.width;
+            material.upsOnSheet.typeH.byHeight = material.height / (typeHSizes.coverStamp.height + 2 * boxBleed);
+            material.upsOnSheet.typeH.byWidth = material.width / (typeHSizes.coverStamp.width + 2 * boxBleed);
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byHeight =
-              material.height / typeTSizes.coverStamp.height;
-            material.upsOnSheet.typeT.byWidth =
-              material.width / typeTSizes.coverStamp.width;
+            material.upsOnSheet.typeT.byHeight = material.height / (typeTSizes.coverStamp.height + 2 * boxBleed);
+            material.upsOnSheet.typeT.byWidth = material.width / (typeTSizes.coverStamp.width + 2 * boxBleed);
             break;
           default:
             break;
         }
-
-        // // Type H boxes cover stamps
-        // material.upsOnSheet.typeH.byWidth = material.width / typeHSizes.coverStamp.width;
-        // material.upsOnSheet.typeH.byHeight = material.height / typeHSizes.coverStamp.height;
-
-        // // Type T boxes cover stamps
-        // material.upsOnSheet.typeT.byWidth = material.width / typeTSizes.coverStamp.width;
-        // material.upsOnSheet.typeT.byHeight = material.height / typeTSizes.coverStamp.height;
       });
     },
   },

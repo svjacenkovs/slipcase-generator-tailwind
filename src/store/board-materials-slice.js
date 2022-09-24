@@ -16,24 +16,24 @@ const combinedTboardHeightAmount = (materialLength, totalBoxHeight, spineWidth, 
 
 const initialState = {
   items: [
-    // {
-    //   width: 700,
-    //   height: 1000,
-    //   grain: 'long',
-    //   upsOnSheet: {
-    //     typeH: { byWidth: 0, byHeight: 0, total: 0 },
-    //     typeT: { byWidth: 0, byHeight: 0, total: 0 },
-    //   },
-    // },
-    // {
-    //   width: 800,
-    //   height: 1000,
-    //   grain: 'long',
-    //   upsOnSheet: {
-    //     typeH: { byWidth: 0, byHeight: 0, total: 0 },
-    //     typeT: { byWidth: 0, byHeight: 0, total: 0 },
-    //   },
-    // },
+    {
+      width: 700,
+      height: 1000,
+      grain: 'long',
+      upsOnSheet: {
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+      },
+    },
+    {
+      width: 800,
+      height: 1000,
+      grain: 'long',
+      upsOnSheet: {
+        typeH: { byWidth: 0, byHeight: 0, total: 0 },
+        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+      },
+    },
     {
       width: 640,
       height: 900,

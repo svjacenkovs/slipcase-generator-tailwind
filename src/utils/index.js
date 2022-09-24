@@ -27,17 +27,9 @@ function setGlobals() {
   width = mmToPt(document.getElementById('width').valueAsNumber);
   height = mmToPt(document.getElementById('height').valueAsNumber);
   depth = mmToPt(document.getElementById('depth').valueAsNumber);
-  materialThickness = mmToPt(
-    document.getElementById('materialThickness').valueAsNumber
-  );
+  materialThickness = mmToPt(document.getElementById('materialThickness').valueAsNumber);
 
-  if (
-    fileName === '' ||
-    !isType(width, 'number') ||
-    !isType(height, 'number') ||
-    !isType(depth, 'number') ||
-    !isType(materialThickness, 'number')
-  ) {
+  if (fileName === '' || !isType(width, 'number') || !isType(height, 'number') || !isType(depth, 'number') || !isType(materialThickness, 'number')) {
     // Pārbaudam ievades laukus.
     alert('Lūdzu aizpildi visus ievades laukus.');
     return;
@@ -46,15 +38,9 @@ function setGlobals() {
 async function pape() {
   //PAPES dokumenta izmērs
   let documentWidth = 2 * depth + width + mmToPt(40); // Dokumenta platums punktos
-  let documentHeight =
-    2 * (width + materialThickness) +
-    height +
-    2 * materialThickness +
-    mmToPt(40); // Dokumenta garums punktos
+  let documentHeight = 2 * (width + materialThickness) + height + 2 * materialThickness + mmToPt(40); // Dokumenta garums punktos
   let stampWidth = ptToMm(2 * depth + width);
-  let stampHeight = ptToMm(
-    2 * (width + materialThickness) + height + 2 * materialThickness
-  );
+  let stampHeight = ptToMm(2 * (width + materialThickness) + height + 2 * materialThickness);
   // Create a new PDFDocument
   const pdfDoc = await PDFDocument.create();
   // Embed the Times Roman font
@@ -64,30 +50,26 @@ async function pape() {
   const page = pdfDoc.addPage([documentWidth, documentHeight]);
 
   //Calculate coordinates and draw lines on page
-  tTypeSlipcase
-    .calculateBoardLines(width, height, depth, materialThickness)
-    .forEach((line) => {
-      let lineColor;
-      if (line.color === 'black') {
-        lineColor = { color: cmyk(0, 0, 0, 1) };
-      }
-      if (line.color === 'red') {
-        lineColor = { color: cmyk(0, 1, 1, 0) };
-      }
-      page.drawLine({
-        start: { x: line.startX, y: line.startY },
-        end: { x: line.endX, y: line.endY },
-        thickness: 1,
-        opacity: 1,
-        lineCap: 1,
-        ...lineColor,
-      });
+  tTypeSlipcase.calculateBoardLines(width, height, depth, materialThickness).forEach((line) => {
+    let lineColor;
+    if (line.color === 'black') {
+      lineColor = { color: cmyk(0, 0, 0, 1) };
+    }
+    if (line.color === 'red') {
+      lineColor = { color: cmyk(0, 1, 1, 0) };
+    }
+    page.drawLine({
+      start: { x: line.startX, y: line.startY },
+      end: { x: line.endX, y: line.endY },
+      thickness: 1,
+      opacity: 1,
+      lineCap: 1,
+      ...lineColor,
     });
+  });
 
   page.drawText(
-    `${fileName}_papes_cirtnis: W${roundHalf(ptToMm(width))}_H${roundHalf(
-      ptToMm(height)
-    )}_D${roundHalf(ptToMm(depth))}mm | Board: ${ptToMm(
+    `${fileName}_papes_cirtnis: W${roundHalf(ptToMm(width))}_H${roundHalf(ptToMm(height))}_D${roundHalf(ptToMm(depth))}mm | Board: ${ptToMm(
       materialThickness
     )}mm | Dimensions: ${roundHalf(stampWidth)}x${roundHalf(stampHeight)}mm`,
     {
@@ -110,8 +92,7 @@ async function pape() {
 
 async function parvalks() {
   //PĀRVALKA dokumenta izmērs
-  let documentWidth =
-    2 * depth + width + 7 * materialThickness + mmToPt(30) + mmToPt(40); // Dokumenta platums punktos
+  let documentWidth = 2 * depth + width + 7 * materialThickness + mmToPt(30) + mmToPt(40); // Dokumenta platums punktos
   let documentHeight = 2 * width + height + 5 * materialThickness + mmToPt(40); // Dokumenta garums punktos
   let stampWidth = ptToMm(2 * depth + width + 7 * materialThickness) + 30;
   let stampHeight = ptToMm(2 * width + height + 5 * materialThickness);
@@ -123,30 +104,26 @@ async function parvalks() {
   // Add a blank page to the document
   const page = pdfDoc.addPage([documentWidth, documentHeight]);
 
-  tTypeSlipcase
-    .calculateCasing(width, height, depth, materialThickness)
-    .forEach((line) => {
-      let lineColor;
-      if (line.color === 'black') {
-        lineColor = { color: cmyk(0, 0, 0, 1) };
-      }
-      if (line.color === 'red') {
-        lineColor = { color: cmyk(0, 1, 1, 0) };
-      }
-      page.drawLine({
-        start: { x: line.startX, y: line.startY },
-        end: { x: line.endX, y: line.endY },
-        thickness: 1,
-        opacity: 1,
-        lineCap: 1,
-        ...lineColor,
-      });
+  tTypeSlipcase.calculateCasing(width, height, depth, materialThickness).forEach((line) => {
+    let lineColor;
+    if (line.color === 'black') {
+      lineColor = { color: cmyk(0, 0, 0, 1) };
+    }
+    if (line.color === 'red') {
+      lineColor = { color: cmyk(0, 1, 1, 0) };
+    }
+    page.drawLine({
+      start: { x: line.startX, y: line.startY },
+      end: { x: line.endX, y: line.endY },
+      thickness: 1,
+      opacity: 1,
+      lineCap: 1,
+      ...lineColor,
     });
+  });
 
   page.drawText(
-    `${fileName}_parvalka_cirtnis: W${roundHalf(ptToMm(width))}_H${roundHalf(
-      ptToMm(height)
-    )}_D${roundHalf(ptToMm(depth))}mm | Board: ${ptToMm(
+    `${fileName}_parvalka_cirtnis: W${roundHalf(ptToMm(width))}_H${roundHalf(ptToMm(height))}_D${roundHalf(ptToMm(depth))}mm | Board: ${ptToMm(
       materialThickness
     )}mm | Dimensions: ${roundHalf(stampWidth)}x${roundHalf(stampHeight)}mm`,
     {
@@ -184,20 +161,13 @@ function calculate() {
   setGlobals();
 
   let papeStampWidth = ptToMm(2 * depth + width);
-  let papeStampHeight = ptToMm(
-    2 * (width + materialThickness) + height + 2 * materialThickness
-  );
+  let papeStampHeight = ptToMm(2 * (width + materialThickness) + height + 2 * materialThickness);
 
-  let parvalksStampWidth =
-    ptToMm(2 * depth + width + 7 * materialThickness) + 30;
+  let parvalksStampWidth = ptToMm(2 * depth + width + 7 * materialThickness) + 30;
   let parvalksStampHeight = ptToMm(2 * width + height + 5 * materialThickness);
 
-  papeElement.innerText = `Pape: ${roundHalf(papeStampWidth)} x ${roundHalf(
-    papeStampHeight
-  )} mm`;
-  parvalksElement.innerHTML = `Pārvalks: ${roundHalf(
-    parvalksStampWidth
-  )} x ${roundHalf(parvalksStampHeight)} mm`;
+  papeElement.innerText = `Pape: ${roundHalf(papeStampWidth)} x ${roundHalf(papeStampHeight)} mm`;
+  parvalksElement.innerHTML = `Pārvalks: ${roundHalf(parvalksStampWidth)} x ${roundHalf(parvalksStampHeight)} mm`;
 }
 
 createPapeButton.addEventListener('click', createPape);
