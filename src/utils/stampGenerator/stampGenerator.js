@@ -9,6 +9,11 @@ function roundHalf(num) {
   return Math.round(num * 2) / 2;
 }
 
+function calculateLineDistance(x1, x2, y1, y2) {
+  //Formula lai aprēķinātu līnijas garumu: Math.sqrt((x2-x1)^2+(y2-y1)^2)
+  return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
 async function prepareStampFile({
   slipcaseType,
   fileName,
@@ -29,6 +34,10 @@ async function prepareStampFile({
   const timesRomanFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
   // Add a blank page to the document
   const page = pdfDoc.addPage([documentWidth, documentHeight]);
+
+  // variable for max knife and scoring lines distance.
+  let totalKnifeDistance = 0;
+
   //Calculate coordinates and draw lines on page. Here i call hTypeSlipcase and tTypeSlipcase functions
   slipcaseType[slipcasePartName](spineInPoints, heightInPoints, widthInPoints, materialThicknessInPoints).forEach((line) => {
     let lineColor;
@@ -38,6 +47,7 @@ async function prepareStampFile({
     if (line.color === 'red') {
       lineColor = { color: cmyk(0, 1, 1, 0) };
     }
+
     page.drawLine({
       start: { x: line.startX, y: line.startY },
       end: { x: line.endX, y: line.endY },
@@ -46,6 +56,8 @@ async function prepareStampFile({
       lineCap: 1,
       ...lineColor,
     });
+
+    totalKnifeDistance += calculateLineDistance(line.startX, line.endX, line.startY, line.endY);
   });
 
   page.drawText(
@@ -60,10 +72,14 @@ async function prepareStampFile({
       color: cmyk(0, 0, 0, 1),
     }
   );
+
   page.translateContent(mmToPt(20), mmToPt(20));
+  // Switch distance from points to mm
+  const totalKnifeDistanceInMm = ptToMm(totalKnifeDistance);
   // Serialize the PDFDocument to bytes (a Uint8Array)
   const pdfBytes = await pdfDoc.save();
-  return pdfBytes;
+
+  return { pdfBytes, totalKnifeDistanceInMm };
 }
 
 export const generateTypeT = {
@@ -96,7 +112,7 @@ export const generateTypeT = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile, `${fileName}_pape.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_pape.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
@@ -130,10 +146,36 @@ export const generateTypeT = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile, `${fileName}_parvalks.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_parvalks.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
+  },
+  boardKnifeLength: function ({ width, height, spine, materialThickness }) {
+    const widthInPoints = mmToPt(width);
+    const heightInPoints = mmToPt(height);
+    const spineInPoints = mmToPt(spine);
+    const materialThicknessInPoints = mmToPt(materialThickness);
+    let totalKnifeDistance = 0;
+    tTypeSlipcase.calculateBoardLines(spineInPoints, heightInPoints, widthInPoints, materialThicknessInPoints).forEach((line) => {
+      totalKnifeDistance += calculateLineDistance(line.startX, line.endX, line.startY, line.endY);
+    });
+    // Switch distance from points to milimeters and then to meters
+    const totalKnifeDistanceInMeters = ptToMm(totalKnifeDistance) / 1000;
+    return totalKnifeDistanceInMeters.toFixed(2);
+  },
+  coverKnifeLength: function ({ width, height, spine, materialThickness }) {
+    const widthInPoints = mmToPt(width);
+    const heightInPoints = mmToPt(height);
+    const spineInPoints = mmToPt(spine);
+    const materialThicknessInPoints = mmToPt(materialThickness);
+    let totalKnifeDistance = 0;
+    tTypeSlipcase.calculateCasingLines(spineInPoints, heightInPoints, widthInPoints, materialThicknessInPoints).forEach((line) => {
+      totalKnifeDistance += calculateLineDistance(line.startX, line.endX, line.startY, line.endY);
+    });
+    // Switch distance from points to milimeters and then to meters
+    const totalKnifeDistanceInMeters = ptToMm(totalKnifeDistance) / 1000;
+    return totalKnifeDistanceInMeters.toFixed(2);
   },
 };
 
@@ -167,7 +209,7 @@ export const generateTypeH = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile, `${fileName}_pape.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_pape.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
@@ -201,9 +243,35 @@ export const generateTypeH = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile, `${fileName}_parvalks.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_parvalks.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
+  },
+  boardKnifeLength: function ({ width, height, spine, materialThickness }) {
+    const widthInPoints = mmToPt(width);
+    const heightInPoints = mmToPt(height);
+    const spineInPoints = mmToPt(spine);
+    const materialThicknessInPoints = mmToPt(materialThickness);
+    let totalKnifeDistance = 0;
+    hTypeSlipcase.calculateBoardLines(spineInPoints, heightInPoints, widthInPoints, materialThicknessInPoints).forEach((line) => {
+      totalKnifeDistance += calculateLineDistance(line.startX, line.endX, line.startY, line.endY);
+    });
+    // Switch distance from points to milimeters and then to meters
+    const totalKnifeDistanceInMeters = ptToMm(totalKnifeDistance) / 1000;
+    return totalKnifeDistanceInMeters.toFixed(2);
+  },
+  coverKnifeLength: function ({ width, height, spine, materialThickness }) {
+    const widthInPoints = mmToPt(width);
+    const heightInPoints = mmToPt(height);
+    const spineInPoints = mmToPt(spine);
+    const materialThicknessInPoints = mmToPt(materialThickness);
+    let totalKnifeDistance = 0;
+    hTypeSlipcase.calculateCasingLines(spineInPoints, heightInPoints, widthInPoints, materialThicknessInPoints).forEach((line) => {
+      totalKnifeDistance += calculateLineDistance(line.startX, line.endX, line.startY, line.endY);
+    });
+    // Switch distance from points to milimeters and then to meters
+    const totalKnifeDistanceInMeters = ptToMm(totalKnifeDistance) / 1000;
+    return totalKnifeDistanceInMeters.toFixed(2);
   },
 };
