@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { generateTypeT, generateTypeH } from '../utils/stampGenerator/stampGenerator';
 
 const initialState = {
   submittedBoxSizes: [],
@@ -20,14 +21,14 @@ const upsCalculationSlice = createSlice({
         providedSizes: { spine, width, height, boardThickness },
         boardStamp: {
           width: customRounding(2 * width + spine),
-          height: customRounding(
-            2 * (spine + boardThickness) + height + 2 * boardThickness
-          ),
+          height: customRounding(2 * (spine + boardThickness) + height + 2 * boardThickness),
         },
         coverStamp: {
           width: customRounding(2 * width + spine + 7 * boardThickness + 30),
           height: customRounding(2 * spine + height + 5 * boardThickness),
         },
+        boardKnifeLength: generateTypeH.boardKnifeLength({ spine, width, height, materialThickness: boardThickness }),
+        coverKnifeLength: generateTypeH.coverKnifeLength({ spine, width, height, materialThickness: boardThickness }),
       };
       const typeTbox = {
         type: 'T',
@@ -40,6 +41,8 @@ const upsCalculationSlice = createSlice({
           width: customRounding(2 * width + spine + 7 * boardThickness + 30),
           height: customRounding(2 * spine + height + 4 * boardThickness),
         },
+        boardKnifeLength: generateTypeT.boardKnifeLength({ spine, width, height, materialThickness: boardThickness }),
+        coverKnifeLength: generateTypeT.coverKnifeLength({ spine, width, height, materialThickness: boardThickness }),
       };
       state.submittedBoxSizes.push(typeHbox, typeTbox);
       state.sizeInputs = { width, height, spine, boardThickness };

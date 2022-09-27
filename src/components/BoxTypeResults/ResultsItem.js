@@ -12,21 +12,8 @@ const measurements = {
 };
 
 export default function ResultsItem(props) {
-  const { boxType, boardStamp, coverStamp, providedSizes } = props;
+  const { boxType, boardStamp, coverStamp, boardKnifeLength, coverKnifeLength } = props;
   const generateCurrentType = boxType === 'H' ? generateTypeH : generateTypeT;
-  // console.log(providedSizes);
-  const boardKnifeLength = generateCurrentType.boardKnifeLength({
-    width: providedSizes.width,
-    height: providedSizes.height,
-    spine: providedSizes.spine,
-    materialThickness: providedSizes.boardThickness,
-  });
-  const coverKnifeLength = generateCurrentType.coverKnifeLength({
-    width: providedSizes.width,
-    height: providedSizes.height,
-    spine: providedSizes.spine,
-    materialThickness: providedSizes.boardThickness,
-  });
 
   return (
     <Card className="flex m-2 border rounded-none bg-white">
@@ -39,14 +26,14 @@ export default function ResultsItem(props) {
           <p>
             BOARD: <span>{`${boardStamp.width} x ${boardStamp.height} mm`}</span>
             <br />
-            <span className="text-gray-600/50 text-sm">{boardKnifeLength} (m)</span>
+            <span className="text-gray-600/50 text-sm">{`${boardKnifeLength} (m) | ${boardKnifeLength * 22} \u20AC`}</span>
           </p>
         </div>
         <div className="h-1/2 flex flex-col justify-center">
           <p>
             COVER: <span>{`${coverStamp.width} x ${coverStamp.height} mm`}</span>
             <br />
-            <span className="text-gray-600/50 text-sm">{coverKnifeLength} (m)</span>
+            <span className="text-gray-600/50 text-sm">{`${coverKnifeLength} (m) | ${coverKnifeLength * 22} \u20AC`}</span>
           </p>
         </div>
       </div>

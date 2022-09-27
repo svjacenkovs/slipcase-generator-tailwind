@@ -19,7 +19,15 @@ export default function BoxTypeResults() {
   } else {
     results = boxData.map((box) => {
       return (
-        <ResultsItem key={box.type} boxType={box.type} boardStamp={box.boardStamp} coverStamp={box.coverStamp} providedSizes={box.providedSizes} />
+        <ResultsItem
+          key={box.type}
+          boxType={box.type}
+          boardStamp={box.boardStamp}
+          coverStamp={box.coverStamp}
+          providedSizes={box.providedSizes}
+          boardKnifeLength={box.boardKnifeLength}
+          coverKnifeLength={box.coverKnifeLength}
+        />
       );
     });
   }
