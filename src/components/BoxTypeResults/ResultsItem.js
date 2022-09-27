@@ -26,14 +26,14 @@ export default function ResultsItem(props) {
           <p>
             BOARD: <span>{`${boardStamp.width} x ${boardStamp.height} mm`}</span>
             <br />
-            <span className="text-gray-600/50 text-sm">{`${boardKnifeLength} (m) | ${boardKnifeLength * 22} \u20AC`}</span>
+            <span className="text-gray-600/50 text-sm">{`${boardKnifeLength} (m) | ${(boardKnifeLength * 22).toFixed(2)} \u20AC`}</span>
           </p>
         </div>
         <div className="h-1/2 flex flex-col justify-center">
           <p>
             COVER: <span>{`${coverStamp.width} x ${coverStamp.height} mm`}</span>
             <br />
-            <span className="text-gray-600/50 text-sm">{`${coverKnifeLength} (m) | ${coverKnifeLength * 22} \u20AC`}</span>
+            <span className="text-gray-600/50 text-sm">{`${coverKnifeLength} (m) | ${(coverKnifeLength * 22).toFixed(2)} \u20AC`}</span>
           </p>
         </div>
       </div>
