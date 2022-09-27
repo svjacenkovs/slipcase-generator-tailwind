@@ -1,18 +1,20 @@
 import React from 'react';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
+import { useSelector } from 'react-redux';
 import { generateTypeT, generateTypeH } from '../../utils/stampGenerator/stampGenerator';
 
-const measurements = {
-  width: 170,
-  height: 240,
-  spine: 50,
-  materialThickness: 3,
-  fileName: 'Testing',
-};
+// const measurements = {
+//   width: 170,
+//   height: 240,
+//   spine: 50,
+//   materialThickness: 3,
+//   fileName: 'Testing',
+// };
 
 export default function ResultsItem(props) {
-  const { boxType, boardStamp, coverStamp, boardKnifeLength, coverKnifeLength } = props;
+  const fileName = useSelector((state) => state.upsCalculations.projectName);
+  const { boxType, boardStamp, coverStamp, providedSizes, boardKnifeLength, coverKnifeLength } = props;
   const generateCurrentType = boxType === 'H' ? generateTypeH : generateTypeT;
 
   return (
@@ -43,7 +45,13 @@ export default function ResultsItem(props) {
         <Button
           className="text-sm"
           onClick={() => {
-            generateCurrentType.board(measurements);
+            generateCurrentType.board({
+              width: providedSizes.width,
+              height: providedSizes.height,
+              spine: providedSizes.spine,
+              materialThickness: providedSizes.boardThickness,
+              fileName: fileName,
+            });
           }}
         >
           board
@@ -51,7 +59,13 @@ export default function ResultsItem(props) {
         <Button
           className="text-sm"
           onClick={() => {
-            generateCurrentType.cover(measurements);
+            generateCurrentType.cover({
+              width: providedSizes.width,
+              height: providedSizes.height,
+              spine: providedSizes.spine,
+              materialThickness: providedSizes.boardThickness,
+              fileName: fileName,
+            });
           }}
         >
           cover

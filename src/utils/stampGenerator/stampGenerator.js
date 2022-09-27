@@ -8,6 +8,7 @@ let ptToMm = (pt) => pt * 0.352777778;
 function roundHalf(num) {
   return Math.round(num * 2) / 2;
 }
+const currentDateAndTime = new Date().toLocaleString();
 
 function calculateLineDistance(x1, x2, y1, y2) {
   //Formula lai aprēķinātu līnijas garumu: Math.sqrt((x2-x1)^2+(y2-y1)^2)
@@ -61,9 +62,11 @@ async function prepareStampFile({
   });
 
   page.drawText(
-    `${fileName}_papes_cirtnis: S${roundHalf(ptToMm(spineInPoints))}_H${roundHalf(ptToMm(heightInPoints))}_W${roundHalf(
-      ptToMm(widthInPoints)
-    )}mm | Board: ${ptToMm(materialThicknessInPoints)}mm | Dimensions: ${roundHalf(stampWidthInMm)}x${roundHalf(stampHeightInMm)}mm`,
+    `${fileName}_${slipcasePart}_stamp: W${roundHalf(ptToMm(widthInPoints))}_H${roundHalf(ptToMm(heightInPoints))}_S${roundHalf(
+      ptToMm(spineInPoints)
+    )}_B${ptToMm(materialThicknessInPoints)}mm | Dimensions: ${roundHalf(stampWidthInMm)}x${roundHalf(
+      stampHeightInMm
+    )}mm | Date: ${currentDateAndTime}`,
     {
       x: 0,
       y: documentHeight - 80,
@@ -97,7 +100,7 @@ export const generateTypeT = {
     let stampData = {
       slipcaseType: tTypeSlipcase,
       slipcasePart: 'board',
-      fileName: 'tTypeSlipcaseBoardTest',
+      fileName,
       documentWidth,
       documentHeight,
       stampWidthInMm,
@@ -112,7 +115,7 @@ export const generateTypeT = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile.pdfBytes, `${fileName}_pape.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_pape_${currentDateAndTime}.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +133,7 @@ export const generateTypeT = {
 
     let stampData = {
       slipcaseType: tTypeSlipcase,
-      fileName: 'tTypeSlipcaseCoverTest',
+      fileName,
       slipcasePart: 'cover',
       documentWidth,
       documentHeight,
@@ -146,7 +149,7 @@ export const generateTypeT = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile.pdfBytes, `${fileName}_parvalks.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_parvalks_${currentDateAndTime}.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
@@ -194,7 +197,7 @@ export const generateTypeH = {
     let stampData = {
       slipcaseType: hTypeSlipcase,
       slipcasePart: 'board',
-      fileName: 'hTypeSlipcaseBoardTest',
+      fileName,
       documentWidth,
       documentHeight,
       stampWidthInMm,
@@ -209,7 +212,7 @@ export const generateTypeH = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile.pdfBytes, `${fileName}_pape.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_pape_${currentDateAndTime}.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }
@@ -227,7 +230,7 @@ export const generateTypeH = {
 
     let stampData = {
       slipcaseType: hTypeSlipcase,
-      fileName: 'hTypeSlipcaseCoverTest',
+      fileName,
       slipcasePart: 'cover',
       documentWidth,
       documentHeight,
@@ -243,7 +246,7 @@ export const generateTypeH = {
       // Create pdf file
       const stampFile = await prepareStampFile(stampData);
       // Trigger the browser to download the PDF document
-      download(stampFile.pdfBytes, `${fileName}_parvalks.pdf`, 'application/pdf');
+      download(stampFile.pdfBytes, `${fileName}_parvalks_${currentDateAndTime}.pdf`, 'application/pdf');
     } catch (error) {
       console.log(error);
     }

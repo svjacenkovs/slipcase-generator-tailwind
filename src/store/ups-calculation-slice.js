@@ -4,6 +4,7 @@ import { generateTypeT, generateTypeH } from '../utils/stampGenerator/stampGener
 const initialState = {
   submittedBoxSizes: [],
   sizeInputs: { width: 0, height: 0, spine: 0, materialThickness: 0 },
+  projectName: '',
 };
 const customRounding = (number) => {
   //Noapaļo skaitli ar .toFixed(2), ja vispār ir decimāldaļa.
@@ -46,6 +47,9 @@ const upsCalculationSlice = createSlice({
       };
       state.submittedBoxSizes.push(typeHbox, typeTbox);
       state.sizeInputs = { width, height, spine, boardThickness };
+    },
+    setProjectName(state, action) {
+      state.projectName = action.payload;
     },
   },
 });
