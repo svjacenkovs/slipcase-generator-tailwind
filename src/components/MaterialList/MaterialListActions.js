@@ -19,7 +19,7 @@ export default function MaterialListActions(props) {
         ...prevMaterialData,
         [event.target.name]: event.target.value,
       };
-      newMaterialData.grain = newMaterialData.width < newMaterialData.height ? 'long' : 'short';
+      newMaterialData.grain = +newMaterialData.width < +newMaterialData.height ? 'long' : 'short';
       return { ...newMaterialData };
     });
   };
@@ -44,11 +44,25 @@ export default function MaterialListActions(props) {
     <form className="flex bg-navy p-3 min-w-min" onSubmit={handleSubmit}>
       <div className="flex flex-col">
         <label className="text-yellow">Width:</label>
-        <input className="pl-2 mt-1 border focus:outline-red w-16" type="number" placeholder="mm" name="width" onChange={handleChange} value={materialData.width} />
+        <input
+          className="pl-2 mt-1 border focus:outline-red w-16"
+          type="number"
+          placeholder="mm"
+          name="width"
+          onChange={handleChange}
+          value={materialData.width}
+        />
       </div>
       <div className="flex flex-col">
         <label className="text-yellow">Height:</label>
-        <input className="pl-2 mt-1 ml-2 border focus:outline-red w-16" type="number" placeholder="mm" name="height" onChange={handleChange} value={materialData.height} />
+        <input
+          className="pl-2 mt-1 ml-2 border focus:outline-red w-16"
+          type="number"
+          placeholder="mm"
+          name="height"
+          onChange={handleChange}
+          value={materialData.height}
+        />
       </div>
       <Button className="self-end bg-white text-navy font-medium ml-2 whitespace-nowrap overflow-visible">Add Material</Button>
     </form>
