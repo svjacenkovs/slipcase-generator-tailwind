@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { setBestFitMaterial } from './materialUtils';
 
 const combinedTboardHeightAmount = (materialLength, totalBoxHeight, spineWidth, boxBleed) => {
   let ups = 1;
@@ -21,8 +22,8 @@ const initialState = {
       height: 1000,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -30,8 +31,8 @@ const initialState = {
       height: 1000,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -39,8 +40,8 @@ const initialState = {
       height: 900,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
   ],
@@ -57,8 +58,8 @@ const boardMaterialSlice = createSlice({
         height,
         grain,
         upsOnSheet: {
-          typeH: { byWidth: 0, byHeight: 0, total: 0 },
-          typeT: { byWidth: 0, byHeight: 0, total: 0 },
+          typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+          typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
         },
       });
     },
@@ -120,6 +121,7 @@ const boardMaterialSlice = createSlice({
           material.upsOnSheet.typeT.total = totalVerticalTypeT;
         }
       });
+      setBestFitMaterial(state.items);
     },
   },
 });

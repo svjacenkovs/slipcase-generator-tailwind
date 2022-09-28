@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { setBestFitMaterial } from './materialUtils';
 
 const initialState = {
   items: [
@@ -7,8 +8,8 @@ const initialState = {
       height: 640,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -16,8 +17,8 @@ const initialState = {
       height: 460,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -25,8 +26,8 @@ const initialState = {
       height: 720,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -34,8 +35,8 @@ const initialState = {
       height: 520,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -43,8 +44,8 @@ const initialState = {
       height: 900,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -52,8 +53,8 @@ const initialState = {
       height: 640,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -61,8 +62,8 @@ const initialState = {
       height: 1020,
       grain: 'long',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
     {
@@ -70,8 +71,8 @@ const initialState = {
       height: 720,
       grain: 'short',
       upsOnSheet: {
-        typeH: { byWidth: 0, byHeight: 0, total: 0 },
-        typeT: { byWidth: 0, byHeight: 0, total: 0 },
+        typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+        typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
       },
     },
   ],
@@ -87,8 +88,8 @@ const coverMaterialSlice = createSlice({
         height,
         grain,
         upsOnSheet: {
-          typeH: { byWidth: 0, byHeight: 0, total: 0 },
-          typeT: { byWidth: 0, byHeight: 0, total: 0 },
+          typeH: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
+          typeT: { byWidth: 0, byHeight: 0, total: 0, bestFit: false },
         },
       });
     },
@@ -100,26 +101,31 @@ const coverMaterialSlice = createSlice({
         switch (material.grain) {
           case 'long':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byWidth = material.width / (typeHSizes.coverStamp.width + 2 * boxBleed);
-            material.upsOnSheet.typeH.byHeight = material.height / (typeHSizes.coverStamp.height + 2 * boxBleed);
+            material.upsOnSheet.typeH.byWidth = Math.floor(material.width / (typeHSizes.coverStamp.width + 2 * boxBleed));
+            material.upsOnSheet.typeH.byHeight = Math.floor(material.height / (typeHSizes.coverStamp.height + 2 * boxBleed));
+            material.upsOnSheet.typeH.total = material.upsOnSheet.typeH.byWidth * material.upsOnSheet.typeH.byHeight;
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byWidth = material.width / (typeTSizes.coverStamp.width + 2 * boxBleed);
-            material.upsOnSheet.typeT.byHeight = material.height / (typeTSizes.coverStamp.height + 2 * boxBleed);
+            material.upsOnSheet.typeT.byWidth = Math.floor(material.width / (typeTSizes.coverStamp.width + 2 * boxBleed));
+            material.upsOnSheet.typeT.byHeight = Math.floor(material.height / (typeTSizes.coverStamp.height + 2 * boxBleed));
+            material.upsOnSheet.typeT.total = material.upsOnSheet.typeT.byWidth * material.upsOnSheet.typeT.byHeight;
             break;
           case 'short':
             // Type H boxes cover stamps
-            material.upsOnSheet.typeH.byHeight = material.height / (typeHSizes.coverStamp.height + 2 * boxBleed);
-            material.upsOnSheet.typeH.byWidth = material.width / (typeHSizes.coverStamp.width + 2 * boxBleed);
+            material.upsOnSheet.typeH.byHeight = Math.floor(material.height / (typeHSizes.coverStamp.height + 2 * boxBleed));
+            material.upsOnSheet.typeH.byWidth = Math.floor(material.width / (typeHSizes.coverStamp.width + 2 * boxBleed));
+            material.upsOnSheet.typeH.total = material.upsOnSheet.typeH.byWidth * material.upsOnSheet.typeH.byHeight;
 
             // Type T boxes cover stamps
-            material.upsOnSheet.typeT.byHeight = material.height / (typeTSizes.coverStamp.height + 2 * boxBleed);
-            material.upsOnSheet.typeT.byWidth = material.width / (typeTSizes.coverStamp.width + 2 * boxBleed);
+            material.upsOnSheet.typeT.byHeight = Math.floor(material.height / (typeTSizes.coverStamp.height + 2 * boxBleed));
+            material.upsOnSheet.typeT.byWidth = Math.floor(material.width / (typeTSizes.coverStamp.width + 2 * boxBleed));
+            material.upsOnSheet.typeT.total = material.upsOnSheet.typeT.byWidth * material.upsOnSheet.typeT.byHeight;
             break;
           default:
             break;
         }
       });
+      setBestFitMaterial(state.items);
     },
   },
 });
